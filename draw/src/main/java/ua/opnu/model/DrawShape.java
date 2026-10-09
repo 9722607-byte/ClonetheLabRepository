@@ -3,8 +3,10 @@ package ua.opnu.model;
 import java.awt.*;
 
 /*
- * Клас "Фігура для малювання".
- * Клас містить початкову та кінцеву точку, а також різні методи
+- Клас "Фігура для малювання".
+
+- Клас містить початкову та кінцеву точку, а також різні методи
+
  */
 public class DrawShape {
 
@@ -14,13 +16,16 @@ public class DrawShape {
             shape = new Rectangle();
         } else if (shapeType == DrawShape.SHAPE_ROUNDED_RECT) {
             shape = new RoundedRectangle();
+        } else if (shapeType == DrawShape.SHAPE_ELLIPSE) {
+            shape = new Ellipse();
         }
         return shape;
     }
 
     // Константи для типів фігур
-    public static final int SHAPE_RECTANGLE = 0;
-    public static final int SHAPE_ROUNDED_RECT = 1;
+    public static final int SHAPE_RECTANGLE = 1;
+    public static final int SHAPE_ROUNDED_RECT = 2;
+    public static final int SHAPE_ELLIPSE = 3;
 
     // Початкова та кінцева точки
     private Point startPoint;

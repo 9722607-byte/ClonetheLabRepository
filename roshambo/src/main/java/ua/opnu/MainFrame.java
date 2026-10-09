@@ -36,46 +36,57 @@ public class MainFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    private GameShape generateShape() {
-
-        // TODO: написати логіку методу
-
-        // Метод повертає об'єкт ігрової фігури (камінь, ножиці чи папір)
-        // випадковим чином
-
-        int random = new Random().nextInt(3);
-
-        return new GameShape(); // TODO: змініть на об'єкт потрібної фігури
+    public GameShape generateShape() {
+        int random = (int) (Math.random() * 3);
+        switch (random) {
+            case 0: return new Rock();
+            case 1: return new Scissors();
+            default: return new Paper();
+        }
     }
 
-    private int checkWinner(GameShape player, GameShape computer) {
+    public int checkWinner(GameShape comp, GameShape player) {
+        // Якщо класи однакові — нічия
+        if (comp.getClass() == player.getClass()) {
+            return 0;
+        }
 
-        // Метод отримує клас фігури гравця і комп'ютера за допомогою оператора instanceof
-        // Метод повертає 1 якщо переміг гравець
-        // Метод повертає 0 якщо нічия (обидві фігури однакові)
-        // Метод повертає -1 якщо переміг комп'ютер
-
-        // TODO: написати логіку методу
+        // Логіка перемоги гравця:
+        // Камінь перемагає Ножиці
+        // Ножиці перемагають Папір
+        // Папір перемагає Камінь
+        if (player instanceof Rock) {
+            return (comp instanceof Scissors) ? 1 : -1;
+        } else if (player instanceof Scissors) {
+            return (comp instanceof Paper) ? 1 : -1;
+        } else if (player instanceof Paper) {
+            return (comp instanceof Rock) ? 1 : -1;
+        }
 
         return 0;
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Генерується ход комп'ютеру
+        // Генерується хід комп'ютеру
         GameShape computerShape = generateShape();
 
-        GameShape playerShape = new GameShape();
+        GameShape playerShape = null;
         // Визначаємо, на яку кнопку натиснув гравець
-        switch (e.getActionCommand()) {
+        switch (e.getActionCommand().toLowerCase()) {
             case "rock":
-                // присвоїти playerShape об'єкт відповідного класу
+            case "камінь":
+                playerShape = new Rock();
                 break;
             case "paper":
-                // присвоїти playerShape об'єкт відповідного класу
+            case "папір":
+                playerShape = new Paper();
                 break;
             case "scissors":
-                // присвоїти playerShape об'єкт відповідного класу
+            case "ножиці":
+                playerShape = new Scissors();
+                break;
+            default:
+                playerShape = new GameShape();
                 break;
         }
 
